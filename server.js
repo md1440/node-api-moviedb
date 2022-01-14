@@ -1,11 +1,13 @@
-'use strict';
+import { dbConnectionEvents, dbConnect } from './db.js';
+import app from './app.js';
 
-import mongoose from 'mongoose';
-import { app } from './app';
+dbConnectionEvents();
+dbConnect();
 
-const port = 3333;
-const ip = '127.0.0.1';
+const PORT = process.env.PORT || 8080;
 
-app.listen(port, ip, () => {
-  console.log(`Server running on http://${ip}:${port}`);
+app.listen(PORT, () => {
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`Server running on Port: ${PORT}`);
+  }
 });

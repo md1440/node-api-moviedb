@@ -4,13 +4,16 @@
   "description": "Node Express MongoDB Movie API",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "dev": "SET NODE_ENV=development&&nodemon --delay 1500ms server.js",
+    "prod": "SET NODE_ENV=production&&nodemon --delay 1500ms server.js",
+    "lint": "npx eslint ./ --ext .js"
   },
   "keywords": [],
   "author": "Marc",
   "license": "ISC",
   "type": "module",
   "dependencies": {
+    "dotenv": "^11.0.0",
     "express": "^4.17.2",
     "mongoose": "^6.1.6",
     "morgan": "^1.10.0"
