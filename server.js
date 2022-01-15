@@ -1,4 +1,4 @@
-import { dbConnectionEvents, dbConnect } from './db.js';
+import { dbConnectionEvents, dbConnect } from './db/db.js';
 import app from './app.js';
 
 dbConnectionEvents();

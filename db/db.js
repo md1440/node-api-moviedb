@@ -2,7 +2,9 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
 // *** Loading env file
-dotenv.config({ path: './config.env' });
+dotenv.config({
+  path: './config.env'
+});
 
 //*** Replacing PW Placeholder
 const dbUri = process.env.DBURI.replace('<PASSWORD>', process.env.DB_PASSWORD);

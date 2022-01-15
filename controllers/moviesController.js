@@ -54,4 +54,46 @@ const createMovie = async (req, res) => {
   }
 };
 
-export { getAllMovies, getMovieById, createMovie };
+const updateMovieById = async (req, res) => {
+  try {
+    const movie = await Movie.findByIdAndUpdate(req.params.id, req.body, {
+      new: true, // returns updated document
+      runValidators: true,
+    });
+    res.status(200).json({
+      status: 'success',
+      data: {
+        movie,
+      },
+    });
+  } catch (err) {
+    res.status(401).json({
+      status: 'fail',
+      message: err.message,
+    });
+  }
+};
+
+const deleteMovieById = async (req, res) => {
+  try {
+    await Movie.findByIdAndRemove(req.params.id);
+    res.status(204).json({
+      // 204 = no content
+      status: 'success',
+      data: null,
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err.message,
+    });
+  }
+};
+
+export {
+  getAllMovies,
+  getMovieById,
+  createMovie,
+  updateMovieById,
+  deleteMovieById,
+};

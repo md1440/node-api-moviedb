@@ -17,7 +17,6 @@ import mongoose from 'mongoose';
 //     console.log(silence.name);
 // }
 
-
 await mongoose.connect(
   'mongodb+srv://marc:6zEzZ5btGKmrgXtE@unity.wtbbq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
   () => {
@@ -25,7 +24,6 @@ await mongoose.connect(
   },
   (err) => console.error(err.reason)
 );
-
 
 // *****************************
 // Create Schema
@@ -40,14 +38,15 @@ const User = mongoose.model('User', userSchema);
 // export {user}
 // ******************************
 
-
 async function addUser() {
   try {
-    const user = new User({ name: 'Marc', age: 38 });
+    const user = new User({
+      name: 'Marc', age: 38
+    });
     await user.save();
     console.log(user);
   } catch (err) {
     console.log(err);
   }
 }
-addUser()
+addUser();

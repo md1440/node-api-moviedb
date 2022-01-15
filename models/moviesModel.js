@@ -55,7 +55,9 @@ const movieSchema = mongoose.Schema({
   },
   lastupdated: {
     type: String,
-    default: Date.now(),
+    default: function () {
+      return new Date().toISOString();
+    },
     select: false,
   },
   year: {
@@ -89,9 +91,10 @@ const movieSchema = mongoose.Schema({
         min: [1, 'Rating must be above 1.0'],
         max: [100, 'Rating must be below 100.0'],
       },
-      numreviews: Number,
+      numReviews: Number,
       meter: Number,
     },
+    production: String,
     lastUpdated: Date,
   },
 });
