@@ -1,18 +1,14 @@
-import mongoose from 'mongoose';
+import express from 'express';
+import {
+  getAllMovies,
+  getMovieById,
+  createMovie,
+} from '../controllers/moviesController.js';
 
-const movieSchema = mongoose.Schema({
-  plot: {
-    type: String,
-    required: [true, 'A movie must have a name'],
-    trim: true,
-  },
-  genres: {
-    type: [String],
-    required: [true, 'A movie must have a genre'],
-  },
-  runtime: Number,
-  cast: {
-    type: [String],
-    required: [true, 'A movie must have a cast'],
-  },
-});
+const router = express.Router();
+
+router.route('/').get(getAllMovies).post(createMovie);
+router.route('/:id').get(getMovieById);
+// router.route('/year=:year').get(getMovieByYear);
+
+export default router;

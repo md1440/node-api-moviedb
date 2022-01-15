@@ -1,10 +1,13 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
+// *** Loading env file
 dotenv.config({ path: './config.env' });
 
+//*** Replacing PW Placeholder
 const dbUri = process.env.DBURI.replace('<PASSWORD>', process.env.DB_PASSWORD);
 
+// *** Defining the database options
 const dbOptions = {
   autoIndex: false,
   maxPoolSize: 10, // Maintain up to 10 socket connections
@@ -12,6 +15,7 @@ const dbOptions = {
   socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
 };
 
+// *** Defining db connection event listeners
 const dbConnectionEvents = () => {
   mongoose.connection.on('connecting', () => {
     if (process.env.NODE_ENV === 'development') {
@@ -43,6 +47,7 @@ const dbConnectionEvents = () => {
   });
 };
 
+// *** conneting the db
 const dbConnect = async () => {
   try {
     await mongoose.connect(dbUri, dbOptions);
