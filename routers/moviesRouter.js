@@ -1,6 +1,7 @@
 import express from 'express';
 import {
-  getAllMovies,
+  aliasTop100,
+  getMovies,
   getMovieById,
   createMovie,
   updateMovieById,
@@ -9,7 +10,8 @@ import {
 
 const router = express.Router();
 
-router.route('/').get(getAllMovies).post(createMovie);
+router.route('/top-100-alltime').get(aliasTop100, getMovies);
+router.route('/').get(getMovies).post(createMovie);
 router
   .route('/:id')
   .get(getMovieById)

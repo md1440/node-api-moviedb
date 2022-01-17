@@ -70,6 +70,7 @@ const movieSchema = mongoose.Schema({
       type: Number,
       min: [1, 'Rating must be above 1.0'],
       max: [10, 'Rating must be below 10.0'],
+      default: 1,
     },
     votes: {
       type: Number,
@@ -78,6 +79,7 @@ const movieSchema = mongoose.Schema({
     id: {
       type: Number,
       default: 0,
+      select: false,
     },
   },
   type: {

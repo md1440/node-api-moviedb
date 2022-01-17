@@ -11,7 +11,7 @@ const dbUri = process.env.DBURI.replace('<PASSWORD>', process.env.DB_PASSWORD);
 
 // *** Defining the database options
 const dbOptions = {
-  autoIndex: false,
+  autoIndex: true,
   maxPoolSize: 10, // Maintain up to 10 socket connections
   serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5 seconds
   socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
