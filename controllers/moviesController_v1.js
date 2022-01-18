@@ -1,5 +1,4 @@
 import Movie from '../models/moviesModel.js';
-import APIFeatures from '../utils/apiFeatures.js';
 
 const aliasTop100 = (req, res, next) => {
   req.query.rating = { gte: '7.5' };
@@ -11,14 +10,64 @@ const aliasTop100 = (req, res, next) => {
 
 const getMovies = async (req, res) => {
   try {
-    console.log(req.query);
+    // *** Building the Query
+    // 1) Filtering & Complex Filtering
+    const queryObj = { ...req.query };
+    const excludedFields = ['sort', 'page', 'limit', 'fields'];
+    excludedFields.forEach((el) => delete queryObj[el]);
+
+    let queryStr = JSON.stringify(queryObj);
+    console.log(queryStr);
+    queryStr = queryStr.replace(
+      /\b(lt|gt|lte|gte|eq|in|all)\b/g,
+      (match) => `$${match}`
+    );
+    queryStr = queryStr.replace(/\b(rating)\b/g, (match) => `imdb.${match}`);
+    // queryStr = queryStr.replace(/\b(genres)\b/g, () => 'genres[0]');
+    // console.log(queryStr);
+
+    let query = Movie.find(JSON.parse(queryStr));
+
+    // 2) Sorting
+    if (req.query.sort) {
+      const sortBy = req.query.sort
+        .replace(/\b(rating)\b/g, (match) => `imdb.${match}`)
+        .split(',')
+        .join(' ');
+
+      console.log('sortBy:', sortBy);
+      query = query.sort(sortBy);
+    } else {
+      query = query.sort('-year'); // default sort
+    }
+
+    // 3) Field Limiting
+    if (req.query.fields) {
+      let fields = req.query.fields.split(',').join(' ');
+      fields = fields.replace(/\b(,rating)\b/g, (match) => `,imdb.${match}`);
+      fields = fields.replace(/\b(rating,)\b/g, (match) => `imdb.${match},`);
+      fields = fields.replace(/\b(rating)\b/g, (match) => `imdb.${match}`);
+      console.log('fields:', fields);
+      query = query.select(fields);
+    } else {
+      query = query.select('-num_mflix_comments');
+    }
+
+    // 4) Pagination
+    const page = req.query.page * 1 || 1;
+    const limit = req.query.limit * 1 || 50;
+    const skip = (page - 1) * limit;
+    query = query.skip(skip).limit(limit);
+
+    if (req.query.page) {
+      const numMovies = await Movie.countDocuments();
+      if (skip >= numMovies) throw new Error('This page does not exist');
+    }
+
+    // console.log(query);
     // *** Executing the Query
-    const api = new APIFeatures(Movie.find(), req.query)
-      .filter()
-      .sort()
-      .limitFields()
-      .paginate();
-    const movies = await api.query;
+    // console.log(req.query, queryStr);
+    const movies = await query;
 
     res.status(200).json({
       status: 'success',
@@ -115,35 +164,6 @@ const deleteMovieById = async (req, res) => {
   }
 };
 
-const getMovieStats = async (req, res) => {
-  try {
-    const stats = await Movie.aggregate([
-      {
-        $match: { 'imdb.rating': { $gte: 5 } },
-      },
-      {
-        $group: {
-          _id: { $toUpper: '$type' },
-          count: { $sum: 1 },
-          avgRating: { $avg: '$imdb.rating' },
-          avgRunTime: { $avg: '$runtime' },
-        },
-      },
-    ]);
-    res.status(200).json({
-      status: 'success',
-      data: {
-        stats,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: 'fail',
-      message: err.message,
-    });
-  }
-};
-
 export {
   aliasTop100,
   getMovies,
@@ -151,5 +171,4 @@ export {
   createMovie,
   updateMovieById,
   deleteMovieById,
-  getMovieStats,
 };
