@@ -166,7 +166,7 @@ const getTopMoviesByYear = async (req, res) => {
           title: 1,
           cast: 1,
           directors: 1,
-          fullplot: 1,
+          plot: 1,
           'imdb.rating': 1,
         },
       },

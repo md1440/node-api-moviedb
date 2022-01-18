@@ -35,7 +35,7 @@ class APIFeatures {
       console.log('sortBy:', sortBy);
       this.query = this.query.sort(sortBy);
     } else {
-      this.query = this.query.sort('-year'); // default sort
+      this.query = this.query.sort('-released'); // default sort
     }
     return this;
   }
@@ -49,14 +49,14 @@ class APIFeatures {
       console.log('fields:', fields);
       this.query = this.query.select(fields);
     } else {
-      this.query = this.query.select('-num_mflix_comments');
+      this.query = this.query.select('-__v');
     }
     return this;
   }
 
   paginate() {
     const page = this.queryString.page * 1 || 1;
-    const limit = this.queryString.limit * 1 || 50;
+    const limit = this.queryString.limit * 1 || 100;
     const skip = (page - 1) * limit;
     this.query = this.query.skip(skip).limit(limit);
 
