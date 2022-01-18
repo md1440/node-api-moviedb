@@ -11,7 +11,7 @@ const aliasTop100 = (req, res, next) => {
 
 const getMovies = async (req, res) => {
   try {
-    console.log(req.query);
+    // console.log(req.query);
     // *** Executing the Query
     const api = new APIFeatures(Movie.find(), req.query)
       .filter()
@@ -40,8 +40,8 @@ const getMovies = async (req, res) => {
 const getMovieById = async (req, res) => {
   try {
     const movie = await Movie.findById(req.params.id);
+    // Create a Guard if id not found, would return null if id has 24 characters
     if (movie === null) {
-      // id not found returns null
       res.status(200).json({
         status: 'success',
         message: 'Id not found in the database.',
@@ -151,7 +151,6 @@ const getTopMoviesByYear = async (req, res) => {
     const year = req.params.year * 1;
     const list = await Movie.aggregate([
       {
-        // $match: { year: { $eq: year } },
         $match: {
           $and: [
             { year: { $eq: year } },

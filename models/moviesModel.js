@@ -143,16 +143,15 @@ movieSchema.virtual('yearsSinceRelease').get(function () {
   return currentDate.getFullYear() - this.year * 1;
 });
 
-// *** Create Document Middleware to run before .save()/.create() hook
-
+// *** Create Document Middleware
 // 1) Use slugify to create a slug(string) for urls
 movieSchema.pre('save', function (next) {
   this.slug = slugify(this.title, { lower: true });
   next();
 });
 
-// *** Create Query Middleware
-// 1) Log query time
+// *** Create Query Middleware/Hooks
+// 1) Log query time pre/post
 movieSchema.pre(/^find/, function (next) {
   this.start = Date.now();
   next();

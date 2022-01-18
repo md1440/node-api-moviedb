@@ -13,14 +13,15 @@ import {
 
 const router = express.Router();
 
+// *** Routing for Alias
 router.route('/top-100-alltime').get(aliasTop100, getMovies);
 
+// *** Routing for Aggregation Pilelines
 router.route('/top-100-yearly/:year').get(getTopMoviesByYear);
-
 router.route('/random').get(getRandomMovies);
-
 router.route('/stats').get(getMovieStats);
 
+// *** Routing Base
 router.route('/').get(getMovies).post(createMovie);
 router
   .route('/:id')
