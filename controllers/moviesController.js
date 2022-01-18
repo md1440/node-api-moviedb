@@ -192,6 +192,42 @@ const getTopMoviesByYear = async (req, res) => {
   }
 };
 
+const getRandomMovies = async (req, res) => {
+  try {
+    const random = await Movie.aggregate([
+      {
+        $match: { 'imdb.rating': { $gte: 5 } },
+      },
+      {
+        $sample: { size: 3 },
+      },
+      {
+        $project: {
+          title: 1,
+          cast: 1,
+          directors: 1,
+          plot: 1,
+          'imdb.rating': 1,
+          year: 1,
+        },
+      },
+    ]);
+
+    res.status(200).json({
+      status: 'success',
+      results: random.length,
+      data: {
+        random,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err.message,
+    });
+  }
+};
+
 export {
   aliasTop100,
   getMovies,
@@ -201,4 +237,5 @@ export {
   deleteMovieById,
   getMovieStats,
   getTopMoviesByYear,
+  getRandomMovies,
 };

@@ -8,6 +8,7 @@ import {
   deleteMovieById,
   getMovieStats,
   getTopMoviesByYear,
+  getRandomMovies,
 } from '../controllers/moviesController.js';
 
 const router = express.Router();
@@ -15,6 +16,8 @@ const router = express.Router();
 router.route('/top-100-alltime').get(aliasTop100, getMovies);
 
 router.route('/top-100-yearly/:year').get(getTopMoviesByYear);
+
+router.route('/random').get(getRandomMovies);
 
 router.route('/stats').get(getMovieStats);
 
