@@ -101,6 +101,19 @@ const movieSchema = mongoose.Schema({
   },
 });
 
+movieSchema.index(
+  {
+    title: 'text',
+    plot: 'text',
+  },
+  {
+    weights: {
+      title: 1,
+      plot: 1,
+    },
+  }
+);
+
 // Wrapping the Schema in a Model
 const Movie = mongoose.model('Movie', movieSchema);
 

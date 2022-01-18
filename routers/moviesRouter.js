@@ -7,12 +7,17 @@ import {
   updateMovieById,
   deleteMovieById,
   getMovieStats,
+  getTopMoviesByYear,
 } from '../controllers/moviesController.js';
 
 const router = express.Router();
 
 router.route('/top-100-alltime').get(aliasTop100, getMovies);
+
+router.route('/top-100-yearly/:year').get(getTopMoviesByYear);
+
 router.route('/stats').get(getMovieStats);
+
 router.route('/').get(getMovies).post(createMovie);
 router
   .route('/:id')

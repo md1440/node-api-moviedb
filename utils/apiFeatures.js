@@ -12,14 +12,14 @@ class APIFeatures {
     excludedFields.forEach((el) => delete queryObj[el]);
 
     let queryStr = JSON.stringify(queryObj);
-    console.log(queryStr);
+    // console.log(queryStr);
     queryStr = queryStr.replace(
       /\b(lt|gt|lte|gte|eq|in|all)\b/g,
       (match) => `$${match}`
     );
     queryStr = queryStr.replace(/\b(rating)\b/g, (match) => `imdb.${match}`);
     // queryStr = queryStr.replace(/\b(genres)\b/g, () => 'genres[0]');
-    // console.log(queryStr);
+    console.log(queryStr);
 
     this.query = this.query.find(JSON.parse(queryStr));
     return this; // returns the entire object
@@ -60,6 +60,30 @@ class APIFeatures {
     const skip = (page - 1) * limit;
     this.query = this.query.skip(skip).limit(limit);
 
+    return this;
+  }
+
+  search() {
+    if (this.queryString.search) {
+      const searchObj = { $text: { $search: this.queryString.search } };
+
+      // console.log('Textsearch:', searchStr);
+      this.query = this.query.find(searchObj);
+    }
+    return this;
+  }
+
+  searchAll() {
+    if (this.queryString.searchall) {
+      const keywords = this.queryString.searchall
+        .split(' ')
+        .map((el) => `"${el}"`)
+        .join('');
+      const searchObj = { $text: { $search: keywords } };
+
+      // console.log('Textsearch:', searchStr);
+      this.query = this.query.find(searchObj);
+    }
     return this;
   }
 }

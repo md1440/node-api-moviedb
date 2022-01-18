@@ -17,7 +17,9 @@ const getMovies = async (req, res) => {
       .filter()
       .sort()
       .limitFields()
-      .paginate();
+      .paginate()
+      .search()
+      .searchAll();
     const movies = await api.query;
 
     res.status(200).json({
@@ -144,6 +146,52 @@ const getMovieStats = async (req, res) => {
   }
 };
 
+const getTopMoviesByYear = async (req, res) => {
+  try {
+    const year = req.params.year * 1;
+    const list = await Movie.aggregate([
+      {
+        // $match: { year: { $eq: year } },
+        $match: {
+          $and: [
+            { year: { $eq: year } },
+            { 'imdb.rating': { $gte: 5 } },
+            { 'imdb.votes': { $gte: 500 } },
+            { type: { $eq: 'movie' } },
+          ],
+        },
+      },
+      {
+        $project: {
+          title: 1,
+          cast: 1,
+          directors: 1,
+          fullplot: 1,
+          'imdb.rating': 1,
+        },
+      },
+      {
+        $sort: { 'imdb.rating': -1 },
+      },
+      {
+        $limit: 100,
+      },
+    ]);
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        list,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err.message,
+    });
+  }
+};
+
 export {
   aliasTop100,
   getMovies,
@@ -152,4 +200,5 @@ export {
   updateMovieById,
   deleteMovieById,
   getMovieStats,
+  getTopMoviesByYear,
 };
