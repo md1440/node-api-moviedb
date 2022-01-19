@@ -11,6 +11,7 @@ import {
   getRandomMovies,
 } from '../controllers/moviesController.js';
 
+// *** Creating the Router
 const router = express.Router();
 
 // *** Routing for Alias
