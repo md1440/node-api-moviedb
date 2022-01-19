@@ -162,6 +162,14 @@ movieSchema.post(/^find/, function (docs, next) {
   next();
 });
 
+// *** Create Aggregation Middleware
+// 1) Add match-condition of 30min minimum runtime to any pipeline array pre-execution
+movieSchema.pre('aggregate', function (next) {
+  this.pipeline().unshift({ $match: { runtime: { $gte: 30 } } });
+  // console.log(this.pipeline());
+  next();
+});
+
 // *** Wrapping the Schema in a Model
 const Movie = mongoose.model('Movie', movieSchema);
 

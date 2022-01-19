@@ -1,6 +1,7 @@
 import Movie from '../models/moviesModel.js';
 import APIFeatures from '../utils/apiFeatures.js';
 
+// *** Alias with presets
 const aliasTop100 = (req, res, next) => {
   req.query.rating = { gte: '7.5' };
   req.query.limit = '100';
@@ -9,9 +10,11 @@ const aliasTop100 = (req, res, next) => {
   next();
 };
 
+// *** CRUD Operations
+// 1.1) Read -> find()
 const getMovies = async (req, res) => {
   try {
-    // console.log(req.query);
+    console.log('Incoming Query:', req.query);
     // *** Executing the Query
     const api = new APIFeatures(Movie.find(), req.query)
       .filter()
@@ -20,6 +23,7 @@ const getMovies = async (req, res) => {
       .paginate()
       .search()
       .searchAll();
+    // console.log('Modified Query:', api); // returns modified Query Obj
     const movies = await api.query;
 
     res.status(200).json({
@@ -37,6 +41,7 @@ const getMovies = async (req, res) => {
   }
 };
 
+// 1.2) Read by Id -> findById()
 const getMovieById = async (req, res) => {
   try {
     const movie = await Movie.findById(req.params.id);
@@ -62,6 +67,7 @@ const getMovieById = async (req, res) => {
   }
 };
 
+// 2) Create -> create()
 const createMovie = async (req, res) => {
   try {
     const newMovie = await Movie.create(req.body);
@@ -81,6 +87,7 @@ const createMovie = async (req, res) => {
   }
 };
 
+// 3) Update by Id -> findByIdAndUpdate()
 const updateMovieById = async (req, res) => {
   try {
     const movie = await Movie.findByIdAndUpdate(req.params.id, req.body, {
@@ -101,6 +108,7 @@ const updateMovieById = async (req, res) => {
   }
 };
 
+// 4) Delete by Id -> findByIdAndRemove()
 const deleteMovieById = async (req, res) => {
   try {
     await Movie.findByIdAndRemove(req.params.id);
@@ -117,6 +125,9 @@ const deleteMovieById = async (req, res) => {
   }
 };
 
+// *** Aggregation Pipelines
+
+// 1) Get General Stats, count of Documents by Type with Avg Rating & Avg Runtime
 const getMovieStats = async (req, res) => {
   try {
     const stats = await Movie.aggregate([
@@ -146,6 +157,9 @@ const getMovieStats = async (req, res) => {
   }
 };
 
+// 2) Get Top 100 Movies per Year with min Imdb Rating of 5 and 500 Votes
+//    Project only title, cast, directors, plot and rating
+//    sorted by Imdb Rating
 const getTopMoviesByYear = async (req, res) => {
   try {
     const year = req.params.year * 1;
@@ -163,10 +177,11 @@ const getTopMoviesByYear = async (req, res) => {
       {
         $project: {
           title: 1,
+          plot: 1,
           cast: 1,
           directors: 1,
-          plot: 1,
           'imdb.rating': 1,
+          runtime: 1,
         },
       },
       {
@@ -191,6 +206,7 @@ const getTopMoviesByYear = async (req, res) => {
   }
 };
 
+// 3) Get 3 Random Movies with an Imdb Rating of min 5
 const getRandomMovies = async (req, res) => {
   try {
     const random = await Movie.aggregate([
@@ -203,11 +219,12 @@ const getRandomMovies = async (req, res) => {
       {
         $project: {
           title: 1,
+          plot: 1,
           cast: 1,
           directors: 1,
-          plot: 1,
           'imdb.rating': 1,
           year: 1,
+          runtime: 1,
         },
       },
     ]);

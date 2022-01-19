@@ -20,10 +20,27 @@ class APIFeatures {
       /\b(lt|gt|lte|gte|eq|in|all)\b/g,
       (match) => `$${match}`
     );
-    // 2.2 Provide correct property access for imdb.rating
+    // 2.2 Modify the genre query
+    queryStr = queryStr.replace(/\b(action)\b/g, 'Action');
+    queryStr = queryStr.replace(/\b(animation)\b/g, 'Animation');
+    queryStr = queryStr.replace(/\b(adventure)\b/g, 'Adventure');
+    queryStr = queryStr.replace(/\b(biography)\b/g, 'Biography');
+    queryStr = queryStr.replace(/\b(comedy)\b/g, 'Comedy');
+    queryStr = queryStr.replace(/\b(crime)\b/g, 'Crime');
+    queryStr = queryStr.replace(/\b(drama)\b/g, 'Drama');
+    queryStr = queryStr.replace(/\b(documentary)\b/g, 'Documentary');
+    queryStr = queryStr.replace(/\b(fantasy)\b/g, 'Fantasy');
+    queryStr = queryStr.replace(/\b(history)\b/g, 'History');
+    queryStr = queryStr.replace(/\b(horror)\b/g, 'Horror');
+    queryStr = queryStr.replace(/\b(thriller)\b/g, 'Thriller');
+    queryStr = queryStr.replace(/\b(mystery)\b/g, 'Mystery');
+    queryStr = queryStr.replace(/\b(sci-Fi)\b/g, 'Sci-Fi');
+    queryStr = queryStr.replace(/\b(war)\b/g, 'War');
+
+    // 2.3 Provide correct property access for imdb.rating
     queryStr = queryStr.replace(/\b(rating)\b/g, (match) => `imdb.${match}`);
 
-    // 2.3 Store the Query Object .find()
+    // 2.4 Store the Query Object .find()
     this.query = this.query.find(JSON.parse(queryStr));
     return this; // returns the entire object
   }
@@ -66,7 +83,7 @@ class APIFeatures {
   // *** Building pagination with skip() & limit()
   paginate() {
     const page = this.queryString.page * 1 || 1; // convert to num, default 1
-    const limit = this.queryString.limit * 1 || 3; // convert to num, default 100
+    const limit = this.queryString.limit * 1 || 100; // convert to num, default 100
     // Skip -> e.g. page=3&limit=10, 1-10 p1. 11-20 p2, 21-30 p3
     // e.g. query.skip(20).limit(10)
     const skip = (page - 1) * limit;
