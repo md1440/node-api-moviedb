@@ -1,24 +1,29 @@
 import express from 'express';
+import helmet from 'helmet';
 import morgan from 'morgan';
 import moviesRouter from './routers/moviesRouter.js';
-import unhandledUrlsRouter from './routers/unhandledRouter.js';
+import invalidUrlsRouter from './routers/invalidUrlsRouter.js';
 
 // *** Creating the EXPRESS App
 const app = express();
 
 // *** Middleware Stack
-// 1) Loading Morgan Http Logger for Dev
+
+// 1) Helmet helps you secure your Express apps by setting various HTTP headers.
+app.use(helmet());
+
+// 2) Loading Morgan Http Logger for Dev
 if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev')); // http logger
+  app.use(morgan('dev'));
 }
 
-// 2) Loading Json middleware to parse incoming requests with JSON payloads
+// 3) Loading Json middleware to parse incoming requests with JSON payloads
 app.use(express.json()); // access to req.body
 
 // *** Mounting the Router for /movies endpoint
 app.use('/api/v1/movies', moviesRouter);
 
-// *** Routing unhandled Urls
-app.all('*', unhandledUrlsRouter);
+// *** Routing invalid Urls
+app.all('*', invalidUrlsRouter);
 
 export default app;
