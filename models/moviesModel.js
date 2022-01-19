@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import slugify from 'slugify';
+// import validator from 'validator';
 
 // *** Defining the Schema
 const movieSchema = mongoose.Schema(
@@ -8,22 +9,30 @@ const movieSchema = mongoose.Schema(
       type: String,
       required: [true, 'A movie must have a name.'],
       trim: true,
-      minlength: [15, 'A tour name must have more or equal then 10 characters'],
-      maxlength: [
-        144,
-        'A tour name must have less or equal then 40 characters',
-      ],
+      minlength: [10, 'A plot must have more or equal then 10 characters'],
+      maxlength: [144, 'A plot must have less or equal then 40 characters'],
     },
     genres: {
       type: [String],
       required: [true, 'A movie must have a genre.'],
+      minlength: [3, 'A genre must have more or equal then 3 characters'],
+      maxlength: [15, 'A genre must have less or equal then 15 characters'],
       trim: true,
+      // validate: [validator.isAlpha, 'Genre must only contain characters'],
+      validate: {
+        validator: function (val) {
+          return /^[A-Za-z\s]*$/.test(val);
+        },
+        message: 'A genre must only contain characters and spaces.',
+      },
     },
     poster: String,
     runtime: Number,
     cast: {
       type: [String],
       required: [true, 'A movie must have a cast.'],
+      minlength: [3, 'A name must have more or equal then 3 characters'],
+      maxlength: [20, 'A name must have less or equal then 20 characters'],
       trim: true,
     },
     num_mflix_comments: {
@@ -33,22 +42,45 @@ const movieSchema = mongoose.Schema(
     title: {
       type: String,
       required: [true, 'A movie must have a title.'],
+      minlength: [3, 'A title must have more or equal then 3 characters'],
+      maxlength: [40, 'A title must have less or equal then 40 characters'],
       trim: true,
+      validate: {
+        validator: function (val) {
+          return /^[A-Za-z0-9\s]*$/.test(val);
+        },
+        message: 'A tile must only contain characters, spaces and numbers.',
+      },
     },
     fullplot: {
       type: String,
       required: [true, 'A movie must have a plot.'],
+      minlength: [48, 'A fullplot must have more or equal then 24 characters'],
+      maxlength: [
+        400,
+        'A fullplot must have less or equal then 144 characters',
+      ],
       trim: true,
     },
     countries: {
       type: [String],
       required: [true, 'A movie must have a country.'],
+      minlength: [3, 'A country must have more or equal then 3 characters'],
+      maxlength: [15, 'A country must have less or equal then 15 characters'],
       trim: true,
+      validate: {
+        validator: function (val) {
+          return /^[A-Za-z\s]*$/.test(val);
+        },
+        message: 'A country must only contain characters and spaces.',
+      },
     },
     released: Date,
     directors: {
       type: [String],
       required: [true, 'A movie must have a director.'],
+      minlength: [3, 'A name must have more or equal then 3 characters'],
+      maxlength: [20, 'A name must have less or equal then 20 characters'],
       trim: true,
     },
     rated: {
@@ -72,6 +104,12 @@ const movieSchema = mongoose.Schema(
       type: Number,
       required: [true, 'A movie must have a production year.'],
       trim: true,
+      validate: {
+        validator: function (val) {
+          return /[0-9]{4}$/.test(val);
+        },
+        message: 'A country must only contain characters and spaces.',
+      },
     },
     imdb: {
       rating: {
@@ -93,6 +131,10 @@ const movieSchema = mongoose.Schema(
     type: {
       type: String,
       trim: true,
+      enum: {
+        values: ['movie', 'serie'],
+        message: 'The type must be either: movie, series.',
+      },
     },
     tomatoes: {
       viewer: {
@@ -144,7 +186,7 @@ movieSchema.virtual('yearsSinceRelease').get(function () {
 });
 
 // *** Create Document Middleware
-// 1) Use slugify to create a slug(string) for urls
+// 1) Use slugify to create a slug(string) for urls (runs only on save()/create())
 movieSchema.pre('save', function (next) {
   this.slug = slugify(this.title, { lower: true });
   next();
