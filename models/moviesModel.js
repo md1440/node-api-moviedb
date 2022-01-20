@@ -165,7 +165,7 @@ const movieSchema = mongoose.Schema(
   }
 );
 
-// *** Create Index to make string searchable
+// *** Create Index to make string searchable for title and plot
 movieSchema.index(
   {
     title: 'text',
@@ -186,6 +186,7 @@ movieSchema.virtual('yearsSinceRelease').get(function () {
 });
 
 // *** Create Document Middleware
+
 // 1) Use slugify to create a slug(string) for urls (runs only on save()/create())
 movieSchema.pre('save', function (next) {
   this.slug = slugify(this.title, { lower: true });
@@ -193,7 +194,8 @@ movieSchema.pre('save', function (next) {
 });
 
 // *** Create Query Middleware/Hooks
-// 1) Log query time pre/post
+
+// 1) Log query time pre/post find(), findById()
 movieSchema.pre(/^find/, function (next) {
   this.start = Date.now();
   next();
@@ -205,6 +207,7 @@ movieSchema.post(/^find/, function (docs, next) {
 });
 
 // *** Create Aggregation Middleware
+
 // 1) Add match-condition of 30min minimum runtime to any pipeline array pre-execution
 movieSchema.pre('aggregate', function (next) {
   this.pipeline().unshift({ $match: { runtime: { $gte: 30 } } });

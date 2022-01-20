@@ -12,6 +12,7 @@ const aliasTop100 = (req, res, next) => {
 };
 
 // *** CRUD Operations
+
 // 1.1) Read -> find()
 const getMovies = async (req, res, next) => {
   try {
@@ -24,7 +25,6 @@ const getMovies = async (req, res, next) => {
       .paginate()
       .search()
       .searchAll();
-    // console.log('Modified Query:', api); // returns modified Query Obj
     const movies = await api.query;
 
     res.status(200).json({
@@ -60,7 +60,7 @@ const getMovieById = async (req, res, next) => {
   }
 };
 
-// 2) Create -> create()
+// 2) Create a Movie (document) -> create()
 const createMovie = async (req, res, next) => {
   try {
     const newMovie = await Movie.create(req.body);
@@ -76,7 +76,7 @@ const createMovie = async (req, res, next) => {
   }
 };
 
-// 3) Update by Id -> findByIdAndUpdate()
+// 3) Update Movie (document) by Id -> findByIdAndUpdate()
 const updateMovieById = async (req, res, next) => {
   try {
     const movie = await Movie.findByIdAndUpdate(req.params.id, req.body, {
@@ -99,7 +99,7 @@ const updateMovieById = async (req, res, next) => {
   }
 };
 
-// 4) Delete by Id -> findByIdAndRemove()
+// 4) Delete Movie (document) by Id -> findByIdAndRemove()
 const deleteMovieById = async (req, res, next) => {
   try {
     const movie = await Movie.findByIdAndRemove(req.params.id);
