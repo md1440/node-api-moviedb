@@ -49,7 +49,7 @@ const movieSchema = mongoose.Schema(
         validator: function (val) {
           return /^[A-Za-z0-9\s]*$/.test(val);
         },
-        message: 'A tile must only contain characters, spaces and numbers.',
+        message: 'A title must only contain characters, spaces and numbers.',
       },
     },
     fullplot: {

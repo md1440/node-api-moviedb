@@ -6,7 +6,7 @@ class APIFeatures {
 
   // *** Building the Query
 
-  // *** 1) Building the filter -> find()
+  // *** 1) Building the filter for conditions -> find()
   filter() {
     const queryObj = { ...this.queryString }; // hardcopy of req.query
     // 1) delete fields for sort, page, limit and fields from queryObj
@@ -116,4 +116,5 @@ class APIFeatures {
     return this;
   }
 }
+
 export default APIFeatures;

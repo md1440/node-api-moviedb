@@ -22,7 +22,7 @@ router.route('/top-100-yearly/:year').get(getTopMoviesByYear);
 router.route('/random').get(getRandomMovies);
 router.route('/stats').get(getMovieStats);
 
-// *** Routing Base
+// *** Routing for basic CRUD Operations
 router.route('/').get(getMovies).post(createMovie);
 router
   .route('/:id')

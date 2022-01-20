@@ -1,6 +1,5 @@
 import Movie from '../models/moviesModel.js';
 import APIFeatures from '../utils/apiFeatures.js';
-import ApiError from '../utils/apiError.js';
 
 // *** Alias with presets
 const aliasTop100 = (req, res, next) => {
@@ -13,7 +12,7 @@ const aliasTop100 = (req, res, next) => {
 
 // *** CRUD Operations
 // 1.1) Read -> find()
-const getMovies = async (req, res, next) => {
+const getMovies = async (req, res) => {
   try {
     console.log('Incoming Query:', req.query);
     // *** Executing the Query
@@ -35,59 +34,66 @@ const getMovies = async (req, res, next) => {
       },
     });
   } catch (err) {
-    // if query doesn't match the database it returns null though the request was ok
-    // in this case 404 feels wrong because the request was ok, just didn't find results
+    res.status(404).json({
+      status: 'fail',
+      message: err.message,
+    });
   }
 };
 
 // 1.2) Read by Id -> findById()
-const getMovieById = async (req, res, next) => {
+const getMovieById = async (req, res) => {
   try {
     const movie = await Movie.findById(req.params.id);
     // Create a Guard if id not found, would return null if id has 24 characters
     if (movie === null) {
-      return next(new ApiError('Id not found in the database.', 404));
+      res.status(200).json({
+        status: 'success',
+        message: 'Id not found in the database.',
+      });
+    } else {
+      res.status(200).json({
+        status: 'success',
+        data: {
+          movie,
+        },
+      });
     }
-    res.status(200).json({
-      // 200 = ok
-      status: 'success',
-      data: {
-        movie,
-      },
-    });
   } catch (err) {
-    next(new ApiError('Invalid format for Id. An Id has 24 characters.', 404));
+    res.status(404).json({
+      status: 'fail',
+      message: err.message,
+    });
   }
 };
 
 // 2) Create -> create()
-const createMovie = async (req, res, next) => {
+const createMovie = async (req, res) => {
   try {
     const newMovie = await Movie.create(req.body);
     res.status(201).json({
-      // 201 = created
       status: 'success',
       data: {
         movie: newMovie,
       },
     });
   } catch (err) {
-    next(new ApiError(err.message, 400)); // bad request
+    res.status(400).json({
+      status: 'fail',
+      message: err.message,
+      casterror: err.name,
+      info: err,
+    });
   }
 };
 
 // 3) Update by Id -> findByIdAndUpdate()
-const updateMovieById = async (req, res, next) => {
+const updateMovieById = async (req, res) => {
   try {
     const movie = await Movie.findByIdAndUpdate(req.params.id, req.body, {
       new: true, // returns updated document
       runValidators: true,
     });
-
-    if (movie === null) {
-      return next(new ApiError('Id not found in the database.', 404));
-    }
-
     res.status(200).json({
       status: 'success',
       data: {
@@ -95,33 +101,34 @@ const updateMovieById = async (req, res, next) => {
       },
     });
   } catch (err) {
-    next(new ApiError(err.message, 400)); // bad request
+    res.status(401).json({
+      status: 'fail',
+      message: err.message,
+    });
   }
 };
 
 // 4) Delete by Id -> findByIdAndRemove()
-const deleteMovieById = async (req, res, next) => {
+const deleteMovieById = async (req, res) => {
   try {
-    const movie = await Movie.findByIdAndRemove(req.params.id);
-
-    if (movie === null) {
-      return next(new ApiError('Id not found in the database.', 404));
-    }
-
+    await Movie.findByIdAndRemove(req.params.id);
     res.status(204).json({
       // 204 = no content
       status: 'success',
       data: null,
     });
   } catch (err) {
-    next(new ApiError(err.message, 404));
+    res.status(404).json({
+      status: 'fail',
+      message: err.message,
+    });
   }
 };
 
 // *** Aggregation Pipelines
 
 // 1) Get General Stats, count of Documents by Type with Avg Rating & Avg Runtime
-const getMovieStats = async (req, res, next) => {
+const getMovieStats = async (req, res) => {
   try {
     const stats = await Movie.aggregate([
       {
@@ -143,14 +150,17 @@ const getMovieStats = async (req, res, next) => {
       },
     });
   } catch (err) {
-    next(new ApiError(err.message, 404));
+    res.status(404).json({
+      status: 'fail',
+      message: err.message,
+    });
   }
 };
 
 // 2) Get Top 100 Movies per Year with min Imdb Rating of 5 and 500 Votes
 //    Project only title, cast, directors, plot and rating
 //    sorted by Imdb Rating
-const getTopMoviesByYear = async (req, res, next) => {
+const getTopMoviesByYear = async (req, res) => {
   try {
     const year = req.params.year * 1;
     const list = await Movie.aggregate([
@@ -189,12 +199,15 @@ const getTopMoviesByYear = async (req, res, next) => {
       },
     });
   } catch (err) {
-    next(new ApiError(err.message, 404));
+    res.status(404).json({
+      status: 'fail',
+      message: err.message,
+    });
   }
 };
 
 // 3) Get 3 Random Movies with an Imdb Rating of min 5
-const getRandomMovies = async (req, res, next) => {
+const getRandomMovies = async (req, res) => {
   try {
     const random = await Movie.aggregate([
       {
@@ -224,7 +237,10 @@ const getRandomMovies = async (req, res, next) => {
       },
     });
   } catch (err) {
-    next(new ApiError(err.message, 404));
+    res.status(404).json({
+      status: 'fail',
+      message: err.message,
+    });
   }
 };
 
