@@ -2,8 +2,10 @@ import { dbConnectionEvents, dbConnect } from './db/db.js';
 import app from './app.js';
 
 // *** Database
+
 // 1) Loading the Event Listeners for the Connection
 dbConnectionEvents();
+
 // 2) Connecting the DB
 dbConnect();
 

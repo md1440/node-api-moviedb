@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import slugify from 'slugify';
-// import validator from 'validator';
 
 // *** Defining the Schema
 const movieSchema = mongoose.Schema(
@@ -18,7 +17,6 @@ const movieSchema = mongoose.Schema(
       minlength: [3, 'A genre must have more or equal then 3 characters'],
       maxlength: [15, 'A genre must have less or equal then 15 characters'],
       trim: true,
-      // validate: [validator.isAlpha, 'Genre must only contain characters'],
       validate: {
         validator: function (val) {
           return /^[A-Za-z\s]*$/.test(val);
@@ -211,7 +209,6 @@ movieSchema.post(/^find/, function (docs, next) {
 // 1) Add match-condition of 30min minimum runtime to any pipeline array pre-execution
 movieSchema.pre('aggregate', function (next) {
   this.pipeline().unshift({ $match: { runtime: { $gte: 30 } } });
-  // console.log(this.pipeline());
   next();
 });
 

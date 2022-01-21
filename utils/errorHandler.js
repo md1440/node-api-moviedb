@@ -1,3 +1,4 @@
+// *** Log Err in Dev Env
 const logErrDev = (err, res) => {
   res.status(err.statusCode).json({
     status: err.status,
@@ -7,6 +8,7 @@ const logErrDev = (err, res) => {
   });
 };
 
+// *** Log Err in Prod Env
 const logErrProd = (err, res) => {
   if (err.isOperational) {
     res.status(err.statusCode).json({
@@ -15,7 +17,7 @@ const logErrProd = (err, res) => {
     });
   } else {
     // unexpected err, bugs, package errs
-    console.log('*** error', err);
+    console.error('*** Error', err);
     res.status(500).json({
       status: 'error',
       message: 'Oops, something went wrong...',
@@ -23,6 +25,7 @@ const logErrProd = (err, res) => {
   }
 };
 
+// *** Global Error Handler
 const errorHandler = (err, req, res, next) => {
   //   console.log(err.stack);
   err.status = err.status || 'error';

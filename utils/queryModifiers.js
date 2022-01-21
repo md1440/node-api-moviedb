@@ -1,4 +1,4 @@
-// *** Query Modifiers fot APIFeatures
+// *** Query Modifiers for APIFeatures
 
 // *** Modifying find()
 // 2.1 Add the $ to the query
