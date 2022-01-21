@@ -16,7 +16,7 @@ const aliasTop100 = (req, res, next) => {
 // 1.1) Read -> find()
 const getMovies = async (req, res, next) => {
   try {
-    console.log('Incoming Query:', req.query);
+    // console.log('Incoming Query:', req.query);
     // *** Executing the Query
     const api = new APIFeatures(Movie.find(), req.query)
       .filter()

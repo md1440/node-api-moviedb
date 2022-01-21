@@ -1,6 +1,8 @@
 import express from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import compression from 'compression';
+
 import moviesRouter from './routers/moviesRouter.js';
 import invalidUrlsRouter from './routers/invalidUrlsRouter.js';
 import errorHandler from './utils/errorHandler.js';
@@ -12,6 +14,9 @@ const app = express();
 
 //*** Helmet for setting various HTTP headers for security
 app.use(helmet());
+
+// *** Compression to compress response bodies for all requests coming through
+app.use(compression());
 
 // *** Morgan Http Logger for Dev
 if (process.env.NODE_ENV === 'development') {

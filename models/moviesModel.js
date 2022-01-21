@@ -194,15 +194,15 @@ movieSchema.pre('save', function (next) {
 // *** Create Query Middleware/Hooks
 
 // 1) Log query time pre/post find(), findById()
-movieSchema.pre(/^find/, function (next) {
-  this.start = Date.now();
-  next();
-});
+// movieSchema.pre(/^find/, function (next) {
+//   this.start = Date.now();
+//   next();
+// });
 
-movieSchema.post(/^find/, function (docs, next) {
-  console.log(`Query took ${Date.now() - this.start} milliseconds`);
-  next();
-});
+// movieSchema.post(/^find/, function (docs, next) {
+//   console.log(`Query took ${Date.now() - this.start} milliseconds`);
+//   next();
+// });
 
 // *** Create Aggregation Middleware
 

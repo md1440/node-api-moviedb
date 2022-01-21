@@ -2,10 +2,10 @@
   "name": "api-moviedb",
   "version": "1.0.0",
   "description": "Node Express MongoDB Movie API",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "dev": "SET NODE_ENV=development&&nodemon --delay 1500ms server.js",
-    "prod": "SET NODE_ENV=production&&node --delay 1500ms server.js",
+    "prod": "SET NODE_ENV=production&&node server.js",
     "lint": "npx eslint ./ --ext .js"
   },
   "keywords": [],
@@ -13,6 +13,7 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
+    "compression": "^1.7.4",
     "dotenv": "^11.0.0",
     "express": "^4.17.2",
     "helmet": "^5.0.1",
