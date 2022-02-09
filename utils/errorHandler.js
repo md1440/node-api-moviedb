@@ -10,6 +10,7 @@ const logErrDev = (err, res) => {
 
 // *** Log Err in Prod Env
 const logErrProd = (err, res) => {
+  console.error(err);
   if (err.isOperational) {
     res.status(err.statusCode).json({
       status: err.status,
@@ -34,7 +35,7 @@ const errorHandler = (err, req, res, next) => {
   if (process.env.NODE_ENV === 'development') {
     logErrDev(err, res);
   } else if (process.env.NODE_ENV === 'production') {
-    logErrProd();
+    logErrProd(err, res);
   }
 };
 
