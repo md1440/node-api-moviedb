@@ -4,6 +4,7 @@
   "description": "Node Express MongoDB Movie API",
   "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "dev": "SET NODE_ENV=development&&nodemon --delay 1500ms server.js",
     "prod": "SET NODE_ENV=production&&node server.js",
     "lint": "npx eslint ./ --ext .js"
@@ -27,5 +28,8 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.25.2",
     "prettier": "^2.5.1"
+  },
+  "engines": {
+    "node": ">=16.0.0"
   }
 }
