@@ -1,16 +1,22 @@
+import compression from 'compression';
+import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
-import compression from 'compression';
-
-import moviesRouter from './routers/moviesRouter.js';
 import invalidUrlsRouter from './routers/invalidUrlsRouter.js';
+import moviesRouter from './routers/moviesRouter.js';
 import errorHandler from './utils/errorHandler.js';
 
 // *** Creating the EXPRESS App
 const app = express();
 
 //*** Middleware Stack
+
+//*** Implement Cors on all Routes -> Access-Control-Allow-Origin *
+app.use(cors());
+
+// *** Responding to options requests on delete, patch, put
+app.options('*', cors());
 
 //*** Helmet for setting various HTTP headers for security
 app.use(helmet());
