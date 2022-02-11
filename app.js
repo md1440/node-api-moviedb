@@ -15,7 +15,7 @@ const app = express();
 //*** Implement Cors on all Routes -> Access-Control-Allow-Origin *
 app.use(cors());
 
-// *** Responding to options requests on delete, patch, put
+// *** Enabling pre-flight - Responding to options requests on delete, patch, put
 app.options('*', cors());
 
 //*** Helmet for setting various HTTP headers for security
