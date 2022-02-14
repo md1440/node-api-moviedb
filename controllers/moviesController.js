@@ -7,7 +7,7 @@ const aliasTop100 = (req, res, next) => {
   req.query.rating = { gte: '7.5' };
   req.query.limit = '100';
   req.query.sort = '-rating';
-  req.query.fields = 'rating,title,year,genres, poster';
+  req.query.fields = 'rating,title,year,genres,poster';
   next();
 };
 
