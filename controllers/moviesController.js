@@ -173,6 +173,7 @@ const getTopMoviesByYear = async (req, res, next) => {
           'imdb.rating': 1,
           runtime: 1,
           poster: 1,
+          genres: 1,
         },
       },
       {
@@ -215,6 +216,7 @@ const getRandomMovies = async (req, res, next) => {
           year: 1,
           runtime: 1,
           poster: 1,
+          genres: 1,
         },
       },
     ]);
