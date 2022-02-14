@@ -2,11 +2,11 @@ import mongoose from 'mongoose';
 
 // main().catch(err=> console.log(err));
 
-// async function main () {
-//     await mongoose.connect(
-//       'mongodb+srv://marc:6zEzZ5btGKmrgXtE@unity.wtbbq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
-//     );
-
+async function main() {
+  await mongoose.connect(
+    'mongodb+srv://marc:6zEzZ5btGKmrgXtE@unity.wtbbq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+  );
+}
 //     const kittySchema = new mongoose.Schema({
 //       name: String,
 //     });
@@ -41,7 +41,8 @@ const User = mongoose.model('User', userSchema);
 async function addUser() {
   try {
     const user = new User({
-      name: 'Marc', age: 38
+      name: 'Marc',
+      age: 38,
     });
     await user.save();
     console.log(user);
