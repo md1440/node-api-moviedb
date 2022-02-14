@@ -153,7 +153,7 @@ const getMovieStats = async (req, res, next) => {
 const getTopMoviesByYear = async (req, res, next) => {
   try {
     const year = req.params.year * 1;
-    const list = await Movie.aggregate([
+    const movies = await Movie.aggregate([
       {
         $match: {
           $and: [
@@ -184,8 +184,9 @@ const getTopMoviesByYear = async (req, res, next) => {
 
     res.status(200).json({
       status: 'success',
+      results: movies.length,
       data: {
-        list,
+        movies,
       },
     });
   } catch (err) {
@@ -196,7 +197,7 @@ const getTopMoviesByYear = async (req, res, next) => {
 // 3) Get 3 Random Movies with an Imdb Rating of min 5
 const getRandomMovies = async (req, res, next) => {
   try {
-    const random = await Movie.aggregate([
+    const movies = await Movie.aggregate([
       {
         $match: { 'imdb.rating': { $gte: 5 } },
       },
@@ -218,9 +219,9 @@ const getRandomMovies = async (req, res, next) => {
 
     res.status(200).json({
       status: 'success',
-      results: random.length,
+      results: movies.length,
       data: {
-        random,
+        movies,
       },
     });
   } catch (err) {
