@@ -7,7 +7,7 @@ const aliasTop100 = (req, res, next) => {
   req.query.rating = { gte: '7.5' };
   req.query.limit = '100';
   req.query.sort = '-rating';
-  req.query.fields = 'rating,title,year,genres,poster';
+  req.query.fields = 'plot,rating,title,year,genres,poster,cast,directors,fullplot';
   next();
 };
 
@@ -168,6 +168,7 @@ const getTopMoviesByYear = async (req, res, next) => {
         $project: {
           title: 1,
           plot: 1,
+          fullplot: 1,
           cast: 1,
           directors: 1,
           'imdb.rating': 1,
