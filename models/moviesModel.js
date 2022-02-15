@@ -14,12 +14,12 @@ const movieSchema = mongoose.Schema(
     genres: {
       type: [String],
       required: [true, 'A movie must have a genre.'],
-      minlength: [3, 'A genre must have more or equal then 3 characters'],
-      maxlength: [30, 'A genre must have less or equal then 30 characters'],
+      minlength: [10, 'A genre must have more or equal then 10 characters'],
+      maxlength: [120, 'A genre must have less or equal then 120 characters'],
       trim: true,
       validate: {
         validator: function (val) {
-          return val.every((item) => (/^[A-Za-z\s]*$/.test(item)));
+          return val.every((item) => /^[A-Za-z\s]*$/.test(item));
         },
         message: 'A genre must only contain characters and spaces.',
       },
@@ -45,17 +45,20 @@ const movieSchema = mongoose.Schema(
       trim: true,
       validate: {
         validator: function (val) {
-          return /^[A-Za-z0-9\s]*$/.test(val);
+          return /^[a-zA-Z\u00C0-\u00FF]*$/.test(val);
         },
         message: 'A title must only contain characters, spaces and numbers.',
       },
     },
     fullplot: {
       type: String,
-      minlength: [24, 'A fullplot must have more or equal then 24 characters ...'],
+      minlength: [
+        24,
+        'A fullplot must have more or equal then 24 characters ...',
+      ],
       maxlength: [
         400,
-        'A fullplot must have less or equal then 144 characters',
+        'A fullplot must have less or equal then 600 characters',
       ],
       trim: true,
     },
@@ -67,7 +70,7 @@ const movieSchema = mongoose.Schema(
       trim: true,
       validate: {
         validator: function (val) {
-          return /^[A-Za-z\s]*$/.test(val);
+          return val.every((item) => /^[A-Za-z\s]*$/.test(item));
         },
         message: 'A country must only contain characters and spaces.',
       },
