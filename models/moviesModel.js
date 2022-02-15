@@ -6,7 +6,7 @@ const movieSchema = mongoose.Schema(
   {
     plot: {
       type: String,
-      required: [true, 'A movie must have a name.'],
+      required: [true, 'A movie must have a plot.'],
       trim: true,
       minlength: [10, 'A plot must have more or equal then 10 characters'],
       maxlength: [144, 'A plot must have less or equal then 40 characters'],
@@ -52,8 +52,7 @@ const movieSchema = mongoose.Schema(
     },
     fullplot: {
       type: String,
-      required: [true, 'A movie must have a plot.'],
-      minlength: [48, 'A fullplot must have more or equal then 24 characters'],
+      minlength: [24, 'A fullplot must have more or equal then 24 characters'],
       maxlength: [
         400,
         'A fullplot must have less or equal then 144 characters',
@@ -62,7 +61,7 @@ const movieSchema = mongoose.Schema(
     },
     countries: {
       type: [String],
-      required: [true, 'A movie must have a country.'],
+      // required: [true, 'A movie must have a country.'],
       minlength: [3, 'A country must have more or equal then 3 characters'],
       maxlength: [15, 'A country must have less or equal then 15 characters'],
       trim: true,
@@ -83,7 +82,7 @@ const movieSchema = mongoose.Schema(
     },
     rated: {
       type: String,
-      required: [true, 'A movie must have a Parental Guidelines Rating.'],
+      // required: [true, 'A movie must have a Parental Guidelines Rating.'],
       trim: true,
     },
     awards: {
