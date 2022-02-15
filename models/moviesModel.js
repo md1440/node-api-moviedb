@@ -15,7 +15,7 @@ const movieSchema = mongoose.Schema(
       type: [String],
       required: [true, 'A movie must have a genre.'],
       minlength: [3, 'A genre must have more or equal then 3 characters'],
-      maxlength: [15, 'A genre must have less or equal then 15 characters'],
+      maxlength: [30, 'A genre must have less or equal then 15 characters'],
       trim: true,
       validate: {
         validator: function (val) {
