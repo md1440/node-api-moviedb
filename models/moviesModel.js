@@ -46,7 +46,7 @@ const movieSchema = mongoose.Schema(
       trim: true,
       validate: {
         validator: function (val) {
-          return /^[a-zA-Z\(\)\s\u00C0-\u00FF]*$/.test(val);
+          return /^[a-zA-Z\(\)\-\'\s\u00C0-\u00FF]*$/.test(val);
         },
         message: 'A title must only contain characters, spaces and numbers.',
       },
