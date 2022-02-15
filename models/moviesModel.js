@@ -8,8 +8,8 @@ const movieSchema = mongoose.Schema(
       type: String,
       required: [true, 'A movie must have a plot.'],
       trim: true,
-      minlength: [10, 'A plot must have more or equal then 10 characters'],
-      maxlength: [144, 'A plot must have less or equal then 40 characters'],
+      minlength: [30, 'A plot must have more or equal then 30 characters'],
+      maxlength: [400, 'A plot must have less or equal then 400 characters'],
     },
     genres: {
       type: [String],
@@ -53,12 +53,12 @@ const movieSchema = mongoose.Schema(
     fullplot: {
       type: String,
       minlength: [
-        24,
-        'A fullplot must have more or equal then 24 characters ...',
+        120,
+        'A fullplot must have more or equal then 120 characters ...',
       ],
       maxlength: [
-        400,
-        'A fullplot must have less or equal then 600 characters',
+        1200,
+        'A fullplot must have less or equal then 1200 characters',
       ],
       trim: true,
     },
