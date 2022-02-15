@@ -17,12 +17,12 @@ const movieSchema = mongoose.Schema(
       minlength: [3, 'A genre must have more or equal then 3 characters'],
       maxlength: [30, 'A genre must have less or equal then 30 characters'],
       trim: true,
-      // validate: {
-      //   validator: function (val) {
-      //     return /^[A-Za-z\s]*$/.test(val);
-      //   },
-      //   message: 'A genre must only contain characters and spaces.',
-      // },
+      validate: {
+        validator: function (val) {
+          return val.every((item) => (/^[A-Za-z\s]*$/.test(item)));
+        },
+        message: 'A genre must only contain characters and spaces.',
+      },
     },
     poster: String,
     runtime: Number,
