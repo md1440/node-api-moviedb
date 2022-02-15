@@ -52,7 +52,7 @@ const movieSchema = mongoose.Schema(
     },
     fullplot: {
       type: String,
-      minlength: [24, 'A fullplot must have more or equal then 24 characters'],
+      minlength: [24, 'A fullplot must have more or equal then 24 characters ...'],
       maxlength: [
         400,
         'A fullplot must have less or equal then 144 characters',
