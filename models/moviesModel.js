@@ -133,7 +133,7 @@ const movieSchema = mongoose.Schema(
       type: String,
       trim: true,
       enum: {
-        values: ['movie', 'serie'],
+        values: ['movie', 'series'],
         message: 'The type must be either: movie, series.',
       },
     },
