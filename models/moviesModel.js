@@ -171,11 +171,15 @@ movieSchema.index(
   {
     title: 'text',
     plot: 'text',
+    cast: 'string',
+    directors: 'string'
   },
   {
     weights: {
-      title: 1,
+      title: 10,
       plot: 1,
+      cast: 7,
+      directors: 4,
     },
   }
 );
