@@ -54,7 +54,9 @@ Proceed to describe how to install / setup one's local environment / get started
 <!-- How does one go about using it?
 Provide various use cases and code examples here. -->
 
-Get all movies: `[Get all movies](https://moviedb-rest-api.herokuapp.com/api/v1/movies)`
+<!-- `write-your-code-here` -->
+
+[(https://moviedb-rest-api.herokuapp.com/api/v1/movies)](https://moviedb-rest-api.herokuapp.com/api/v1/movies)
 
 
 ## Project Status
