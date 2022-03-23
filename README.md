@@ -55,8 +55,21 @@ Proceed to describe how to install / setup one's local environment / get started
 Provide various use cases and code examples here. -->
 
 <!-- `write-your-code-here` -->
+### CRUD Operations
 
-[(https://moviedb-rest-api.herokuapp.com/api/v1/movies)](https://moviedb-rest-api.herokuapp.com/api/v1/movies)
+- GET all movies: [https://moviedb-rest-api.herokuapp.com/api/v1/movies](https://moviedb-rest-api.herokuapp.com/api/v1/movies)
+- GET movie by id: [https://moviedb-rest-api.herokuapp.com/api/v1/movies/573a139ff29313caabd015b9](https://moviedb-rest-api.herokuapp.com/api/v1/movies/573a139ff29313caabd015b9)
+- POST (create) movie: [https://moviedb-rest-api.herokuapp.com/api/v1/movies](https://moviedb-rest-api.herokuapp.com/api/v1/movies)
+- PATCH (update) movie: [https://moviedb-rest-api.herokuapp.com/api/v1/movies/573a13eff29313caabdd7db8](https://moviedb-rest-api.herokuapp.com/api/v1/movies/573a13eff29313caabdd7db8)
+- DELETE movie: [https://moviedb-rest-api.herokuapp.com/api/v1/movies/573a13eff29313caabdd7db8](https://moviedb-rest-api.herokuapp.com/api/v1/movies/573a13eff29313caabdd7db8)
+  
+### Search Operations
+
+Search for title, plot, cast, directors (all indexed). (OR) searches for either keyword, (AND) searches for both or all keywords.
+
+- GET search (OR): [https://moviedb-rest-api.herokuapp.com/api/v1/movies?search=dark+knight](https://moviedb-rest-api.herokuapp.com/api/v1/movies?search=dark+knight)
+- GET searchall (AND): [http://moviedb-rest-api.herokuapp.com/api/v1/movies?searchall=dark+knight](http://moviedb-rest-api.herokuapp.com/api/v1/movies?searchall=dark+knight)
+
 
 
 ## Project Status
