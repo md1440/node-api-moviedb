@@ -13,8 +13,8 @@
   - [Usage](#usage)
   - [Project Status](#project-status)
   - [Room for Improvement](#room-for-improvement)
-  - [Acknowledgements](#acknowledgements)
-  - [Contact](#contact)
+  <!-- - [Acknowledgements](#acknowledgements) -->
+  <!-- - [Contact](#contact) -->
 <!-- * [License](#license) -->
 
 
@@ -68,35 +68,51 @@ Provide various use cases and code examples here. -->
 Search for title, plot, cast, directors (all indexed). (OR) searches for either keyword, (AND) searches for both or all keywords.
 
 - GET search (OR): [https://moviedb-rest-api.herokuapp.com/api/v1/movies?search=dark+knight](https://moviedb-rest-api.herokuapp.com/api/v1/movies?search=dark+knight)
-- GET searchall (AND): [http://moviedb-rest-api.herokuapp.com/api/v1/movies?searchall=dark+knight](http://moviedb-rest-api.herokuapp.com/api/v1/movies?searchall=dark+knight)
+- GET searchall (AND): [https://moviedb-rest-api.herokuapp.com/api/v1/movies?searchall=dark+knight](https://moviedb-rest-api.herokuapp.com/api/v1/movies?searchall=dark+knight)
 
+### Filters, Sorting, Limiting, Pagination, Fielding
 
+Basically all movie properties can be filtered, like e.g. year, rating, cast, type, genres. The results can be sorted, it's possible to use equality operators and show only results with e.g. a rating greater or equal than (gte) a rating of 5, to only show results where the genres equals (eq) drama or to only project certain fields of the indiviual results, e.g. to show only title, rating, year, genres of each movie instead of all properties.
+
+- GET filter by year and rating: [https://moviedb-rest-api.herokuapp.com/api/v1/movies?year=2019&rating=7](https://moviedb-rest-api.herokuapp.com/api/v1/movies?year=2019&rating=7)
+- GET all drama movies with a rating greater or equal than 5, limit to 25 results, sorted descneding by rating, show only title, rating, year of each result: [http://moviedb-rest-api.herokuapp.com/api/v1/movies?rating[gte]=5&limit=25&sort=-rating&genres[eq]=drama&fields=title,rating,year,genres](http://moviedb-rest-api.herokuapp.com/api/v1/movies?rating[gte]=5&limit=25&sort=-rating&genres[eq]=drama&fields=title,rating,year,genres)
+- GET movies between 1999 and 2003 with a rating greater of equal than 8.5: [http://moviedb-rest-api.herokuapp.com/api/v1/movies?year[gte]=1999&year[lte]=2003&rating[gte]=8.5](http://moviedb-rest-api.herokuapp.com/api/v1/movies?year[gte]=1999&year[lte]=2003&rating[gte]=8.5)
+- GET: [https://moviedb-rest-api.herokuapp.com/api/v1/movies?page=5&limit=25&fields=title,rating,year,awards&year[gt]=1983&year[lt]=2012&sort=-rating&genre=drama&rating[gte]=8](https://moviedb-rest-api.herokuapp.com/api/v1/movies?page=5&limit=25&fields=title,rating,year,awards&year[gt]=1983&year[lt]=2012&sort=-rating&genre=drama&rating[gte]=8)
+  
+### Alias and Aggregations
+
+- GET Top 100 All-time: [https://moviedb-rest-api.herokuapp.com/api/v1/movies/top-100-alltime](https://moviedb-rest-api.herokuapp.com/api/v1/movies/top-100-alltime)
+- GET Top 100 All-time: [https://moviedb-rest-api.herokuapp.com/api/v1/movies/top-100-alltime](https://moviedb-rest-api.herokuapp.com/api/v1/movies/top-100-alltime)
+- GET Top Movies by year (2012): [https://moviedb-rest-api.herokuapp.com/api/v1/movies/top-100-yearly/2012](https://moviedb-rest-api.herokuapp.com/api/v1/movies/top-100-yearly/2012)
+- GET 3 random movies: [https://moviedb-rest-api.herokuapp.com/api/v1/movies/random](https://moviedb-rest-api.herokuapp.com/api/v1/movies/random)
+- GET Database Stats: [https://moviedb-rest-api.herokuapp.com/api/v1/movies/stats](https://moviedb-rest-api.herokuapp.com/api/v1/movies/stats)
 
 ## Project Status
-Project is: _in progress_ / _complete_ / _no longer being worked on_. If you are no longer working on it, provide reasons why.
+Project is: _complete_. Unless inspiration strikes ;) 
+<!-- If you are no longer working on it, provide reasons why. -->
 
 
 ## Room for Improvement
-Include areas you believe need improvement / could be improved. Also add TODOs for future development.
+<!-- Include areas you believe need improvement / could be improved. Also add TODOs for future development. -->
 
 Room for improvement:
-- Improvement to be done 1
-- Improvement to be done 2
+- Authentication for delete operations
+<!-- - Improvement to be done 2 -->
 
-To do:
+<!-- To do:
 - Feature to be added 1
-- Feature to be added 2
+- Feature to be added 2 -->
 
 
-## Acknowledgements
+<!-- ## Acknowledgements
 Give credit here.
 - This project was inspired by...
 - This project was based on [this tutorial](https://www.example.com).
-- Many thanks to...
+- Many thanks to... -->
 
 
-## Contact
-Created by [@flynerdpl](https://www.flynerd.pl/) - feel free to contact me!
+<!-- ## Contact
+Created by [@flynerdpl](https://www.flynerd.pl/) - feel free to contact me! -->
 
 
 <!-- Optional -->
