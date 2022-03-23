@@ -19,7 +19,7 @@
 
 
 ## General Information
-- Final project of my JavaScript Course (fulltime) with alfatraining GmbH
+- Final project of my JavaScript Developer Course (8w fulltime) with alfatraining GmbH
 - My inspiration was to explore backend development, to explore the world of apis
 - The goal was to build a robust and comprehensive api with clean code and modular architecture
 
