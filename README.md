@@ -82,7 +82,6 @@ Basically all movie properties can be filtered, like e.g. year, rating, cast, ty
 ### Alias and Aggregations
 
 - GET Top 100 All-time: [https://moviedb-rest-api.herokuapp.com/api/v1/movies/top-100-alltime](https://moviedb-rest-api.herokuapp.com/api/v1/movies/top-100-alltime)
-- GET Top 100 All-time: [https://moviedb-rest-api.herokuapp.com/api/v1/movies/top-100-alltime](https://moviedb-rest-api.herokuapp.com/api/v1/movies/top-100-alltime)
 - GET Top Movies by year (2012): [https://moviedb-rest-api.herokuapp.com/api/v1/movies/top-100-yearly/2012](https://moviedb-rest-api.herokuapp.com/api/v1/movies/top-100-yearly/2012)
 - GET 3 random movies: [https://moviedb-rest-api.herokuapp.com/api/v1/movies/random](https://moviedb-rest-api.herokuapp.com/api/v1/movies/random)
 - GET Database Stats: [https://moviedb-rest-api.herokuapp.com/api/v1/movies/stats](https://moviedb-rest-api.herokuapp.com/api/v1/movies/stats)
